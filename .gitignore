@@ -10,3 +10,5 @@ data/processed/*
 
 # Ignore generated database
 data/home_credit.db
+
+models/*
