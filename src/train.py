@@ -99,6 +99,22 @@ def main():
             eval_metric="logloss",
             n_jobs=-1,
         ),
+        
+        "XGBoost (Tuned)": XGBClassifier(
+            n_estimators=500,
+            learning_rate=0.1,
+            max_depth=3,
+            min_child_weight=5,
+            subsample=1.0,
+            colsample_bytree=0.9,
+            gamma=0.1,
+            reg_alpha=0,
+            reg_lambda=5,
+            scale_pos_weight=scale_pos_weight,
+            random_state=42,
+            eval_metric="logloss",
+            n_jobs=-1,
+        ),
     }
 
     results = []
