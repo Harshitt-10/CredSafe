@@ -1,2 +1,12 @@
 .venv/
-data/
+
+# Raw and processed datasets
+data/raw/*
+data/processed/*
+
+# Keep the folders
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Ignore generated database
+data/home_credit.db
