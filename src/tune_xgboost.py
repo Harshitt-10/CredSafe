@@ -16,8 +16,10 @@ REPORTS_DIR.mkdir(exist_ok=True)
 
 def load_data():
     """Load processed training and testing datasets."""
-    X_train = pd.read_parquet(PROCESSED_DIR / "X_train.parquet")
-    X_test = pd.read_parquet(PROCESSED_DIR / "X_test.parquet")
+    X_train = pd.read_parquet(
+        PROCESSED_DIR / "X_train.parquet").astype("float32")
+    X_test = pd.read_parquet(
+        PROCESSED_DIR / "X_test.parquet").astype("float32")
     y_train = pd.read_parquet(PROCESSED_DIR / "y_train.parquet")["TARGET"]
     y_test = pd.read_parquet(PROCESSED_DIR / "y_test.parquet")["TARGET"]
     return X_train, X_test, y_train, y_test
@@ -25,6 +27,9 @@ def load_data():
 
 def main():
     X_train, X_test, y_train, y_test = load_data()
+    print("X_train:", X_train.shape)
+    print("X_test :", X_test.shape)
+    print(X_train.dtypes.value_counts())
     negative = (y_train == 0).sum()
     positive = (y_train == 1).sum()
     scale_pos_weight = negative / positive
@@ -33,7 +38,7 @@ def main():
         objective="binary:logistic",
         eval_metric="logloss",
         random_state=42,
-        n_jobs=-1,
+        n_jobs=2,
         scale_pos_weight=scale_pos_weight,
     )
     param_dist = {
@@ -55,9 +60,11 @@ def main():
         cv=3,
         verbose=2,
         random_state=42,
-        n_jobs=-1,
+        n_jobs=1,
     )
     print("\nStarting hyperparameter tuning...\n")
+    X_train = X_train.to_numpy(dtype="float32")
+    X_test = X_test.to_numpy(dtype="float32")
     search.fit(X_train, y_train)
     print("\nTuning completed.\n")
     print("Best ROC-AUC:")

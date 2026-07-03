@@ -121,6 +121,9 @@ def main():
     df = load_data()
     X, y = split_features_target(df)
     numerical_cols, categorical_cols = identify_columns(X)
+    print("\nCategorical cardinality:")
+    for col in categorical_cols:
+        print(f"{col:40} {X[col].nunique():>8}")
     X_train, X_test, y_train, y_test = split_train_test(X, y)
     preprocessor = build_preprocessor(numerical_cols, categorical_cols)
     print("Fitting preprocessing pipeline...")
@@ -139,6 +142,8 @@ def main():
     print("\nSummary")
     print(f"Train shape : {X_train_processed.shape}")
     print(f"Test shape  : {X_test_processed.shape}")
+    print(df.info())
+    print(df.head())
     print("Preprocessing pipeline finished successfully.")
 
 

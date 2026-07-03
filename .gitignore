@@ -1,14 +1,14 @@
 .venv/
+venv/
 
-# Raw and processed datasets
-data/raw/*
 data/processed/*
-
-# Keep the folders
-!data/raw/.gitkeep
 !data/processed/.gitkeep
-
-# Ignore generated database
+data/raw/*
+!data/raw/.gitkeep
 data/home_credit.db
 
 models/*
+!models/.gitkeep
+!models/best_xgb_params.json
+
+src/__pycache__/
