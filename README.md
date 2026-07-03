@@ -245,7 +245,7 @@ The interactive dashboard allows users to:
 
 ---
 
-# ▶️ Installation
+# Installation
 
 Clone the repository
 
